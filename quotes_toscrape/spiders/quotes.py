@@ -24,3 +24,6 @@ class QuotesSpider(scrapy.Spider):
                 'author': quote.xpath(".//small[@class='author']/text()").get(),
                 'tags': quote.xpath(".//a[@class='tag']/text()").getall(),
                 }
+        next_page = response.xpath("//li[@class='next']/a/@href").get()
+        if next_page:
+            yield response.follow(next_page, self.parse)
